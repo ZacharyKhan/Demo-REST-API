@@ -2,9 +2,12 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
+
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://demo-user:database-password@demo-database-zt8hs.mongodb.net/test?retryWrites=true', {useNewUrlParser: true});
 
 // log all incoming requests
 app.use(morgan('dev'));
@@ -19,6 +22,7 @@ app.use((req, res, next) => {
         res.status(200).json({});
     }
     next();
+
 });
 
 // routes to handle requests
